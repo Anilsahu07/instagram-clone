@@ -22,7 +22,7 @@ const io= new Server(server, {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:"https://fabulous-crepe-d27292.netlify.app",
+    origin:"https://mellow-scone-5430cd.netlify.app/",
     credentials:true
 }))
 
