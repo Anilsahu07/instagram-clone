@@ -3,7 +3,9 @@ const dotenv= require("dotenv")
 dotenv.config()
 
 const connect=()=>{
-    mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect(process.env.MONGO_URI,{
+        
+    })
     .then(()=>{
         console.log("Database is connected");
         
