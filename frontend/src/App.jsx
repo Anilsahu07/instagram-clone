@@ -324,7 +324,7 @@ const App = () => {
                   ref={divRef}
                 >
                   {toggleMenu && (
-                    <div className=" w-[230px] border border-gray-700 flex flex-col items-center p-4 shadow-xl rounded z-50">
+                    <div className=" w-[230px] border border-gray-700 flex flex-col items-center p-4 shadow-xl rounded z-50 bg-white">
                       <p className="font-semibold mb-2 text-black">
                         {toggle ? "Black Theme" : "White Theme"}
                       </p>
