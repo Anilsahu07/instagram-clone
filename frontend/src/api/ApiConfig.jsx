@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance= axios.create({
-    baseURL:"https://instagram-clone-9bg4.onrender.com",
+    baseURL:"https://instagramclone-o89t.onrender.com/",
     withCredentials:true
 })
 
