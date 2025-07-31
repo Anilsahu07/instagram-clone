@@ -12,8 +12,9 @@ const messageRouter= require("./routes/messageRoute")
 
 const io= new Server(server, {
     cors:{
-        origin: `http://localhost:5173`,
+        origin: "https://gentle-macaron-91ff7e.netlify.app",
         methods:["GET", "POST"],
+        credentials:true
     }
 })
 
