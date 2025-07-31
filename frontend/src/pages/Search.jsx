@@ -10,7 +10,7 @@ const Search = () => {
   const navigate=useNavigate()
 
   const showUsers= users?.filter(s=>(
-      [s.profile.fullName,s.username].some(field=>
+      [s?.profile?.fullName,s?.username].filter(Boolean).some(field=>
         field.toLowerCase().includes(search)
       )
     ))

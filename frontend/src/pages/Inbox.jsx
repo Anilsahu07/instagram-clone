@@ -7,7 +7,6 @@ const Inbox = () => {
   const { fetchAllUsers, users, singleUser, toggle, messages, setMessages} =
   useContext(usercontext);
   const [search, setsearch] = useState(null);
-    console.log(messages);
 
   useEffect(() => {
     fetchAllUsers();
@@ -16,7 +15,7 @@ const Inbox = () => {
   const time = new Date().toLocaleTimeString();
 
   const showUsers = users?.filter((s) =>
-    [s.profile.fullName, s.username].some((field) =>
+    [s?.profile?.fullName, s?.username].filter(Boolean).some((field) =>
       field.toLowerCase().includes(search)
     )
    );
@@ -25,7 +24,7 @@ const Inbox = () => {
     if (!window.confirm("Are you sure you want to delete this chat?")) return;
 
     try {
-      await axios.delete(`/messages/delete/${singleUser._id}/${otherUserId}`);
+      await axios.delete(`/messages/delete/${singleUser?._id}/${otherUserId}`);
       fetchAllUsers();
       setMessages([])
     } catch (error) {
@@ -47,11 +46,11 @@ const Inbox = () => {
       />
       {search ? (
         showUsers?.length > 0 ? (
-          showUsers.map(
+          showUsers?.map(
             (user) =>
               user?._id !== singleUser?._id && (
                 <div
-                  key={user._id}
+                  key={user?._id}
                   className={`group flex lg:w-fit w-full border-gray-400 font-[montserrat] ${
                     toggle
                       ? " hover:bg-gray-300"
@@ -59,7 +58,7 @@ const Inbox = () => {
                   }`}
                 >
                   <Link
-                    to={`/chat/${user._id}`}
+                    to={`/chat/${user?._id}`}
                     className="flex items-center lg:gap-4 w-full justify-center p-1 gap-2 border-b-2"
                   >
                     <img
