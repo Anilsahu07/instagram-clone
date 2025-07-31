@@ -5,8 +5,6 @@ const cookieParser= require("cookie-parser")
 const http= require("http")
 const {Server}= require("socket.io")
 const server= http.createServer(app)
-const dotenv= require("dotenv")
-dotenv.config()
 
 const userRouter= require("./routes/userRoute")
 const postRouter= require("./routes/postRoute")
@@ -22,7 +20,7 @@ const io= new Server(server, {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:"https://mellow-scone-5430cd.netlify.app/",
+    origin:"http://localhost:5173",
     credentials:true
 }))
 
