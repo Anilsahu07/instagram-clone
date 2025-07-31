@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usercontext } from '../context/Maincontext'
 import axios from '../api/ApiConfig'
+import { toast } from 'react-toastify'
 
 
 const Create = () => {
@@ -43,9 +44,11 @@ const Create = () => {
       })
       fetchAllPosts()
       setPost(data)
+      toast.success("Post Uploaded successfully")
       navigate("/")
     } catch (error) {
       console.log("Error creating post:", error)
+      toast.success("NetWork Issue")
     }
   }
 

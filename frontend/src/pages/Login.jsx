@@ -3,11 +3,12 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from '../api/ApiConfig'
 import { usercontext } from '../context/Maincontext'
+import { toast } from 'react-toastify'
 
 
 const Login = () => {
     const {register,handleSubmit,reset}=useForm()
-    const {setusers,fetchAllUsers,setsingleUser}=useContext(usercontext)
+    const {fetchAllUsers,setsingleUser}=useContext(usercontext)
     
 
     const loginHandler=async(details)=>{
@@ -17,6 +18,7 @@ const Login = () => {
             setsingleUser(data.user)
             localStorage.setItem("logged",JSON.stringify(data))
             fetchAllUsers()
+            toast.success(`Login successfull`)
             reset()
         } catch (error) {
             console.log("Login failed",error);

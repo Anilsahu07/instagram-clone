@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { usercontext } from '../context/Maincontext'
 import axios from '../api/ApiConfig'
+import { toast } from 'react-toastify'
 
 
 const Update = () => {
@@ -42,7 +43,7 @@ const Update = () => {
                 setsinglePost([...singlePost,data])
                 navigate(`/user/profile`)
             }
-        
+            toast.success("Post Updated")
     }
     
   return (

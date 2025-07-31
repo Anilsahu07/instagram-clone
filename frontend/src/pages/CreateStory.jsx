@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { usercontext } from '../context/Maincontext'
 import { useNavigate } from 'react-router-dom'
 import axios from '../api/ApiConfig'
+import { toast } from 'react-toastify'
 
 
 const CreateStory = () => {
@@ -42,6 +43,7 @@ const CreateStory = () => {
         withCredentials: true
       })
       setstories(data)
+      toast.success("Story Uploaded")
       fetchAllStories()
       navigate("/")
     } catch (error) {

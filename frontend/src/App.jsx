@@ -5,6 +5,7 @@ import { usercontext } from "./context/Maincontext";
 import axios from "./api/ApiConfig";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import { toast, ToastContainer } from "react-toastify";
 
 const App = () => {
   const {
@@ -49,7 +50,6 @@ const App = () => {
     fetchUsersData();
   }, []);
 
-  
   const followUser = async (id) => {
     try {
       await axios.patch(`/users/follow/${id}`, {}, { withCredentials: true });
@@ -93,10 +93,10 @@ const App = () => {
         x: 30,
         duration: 0.1,
       });
-       gsap.to(moveLarge.current, {
+      gsap.to(moveLarge.current, {
         x: 30,
         duration: 0.1,
-      })
+      });
     } else {
       gsap.to(move.current, {
         x: 0,
@@ -109,7 +109,6 @@ const App = () => {
     }
   }, [toggle]);
 
-
   const divRef = useRef(null);
   const iconRef = useRef(null);
   const divRefLarge = useRef(null);
@@ -118,10 +117,10 @@ const App = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-         (!divRefLarge.current.contains(event.target) &&
-        !divRef.current.contains(event.target) )&&
-        (!iconRefLarge.current.contains(event.target) &&
-        !iconRef.current.contains(event.target))
+        !divRefLarge.current.contains(event.target) &&
+        !divRef.current.contains(event.target) &&
+        !iconRefLarge.current.contains(event.target) &&
+        !iconRef.current.contains(event.target)
       ) {
         settoggleMenu(false);
       }
@@ -138,33 +137,35 @@ const App = () => {
 
   return (
     <div>
-      <div className="sticky top-0 lg:hidden z-50 bg-black text-white border-b border-gray-600 w-full flex justify-between p-1">
-        <div className="px-2 py-2">
-          {location.pathname !== `/` ? (
-            <Link
-              onClick={navigateBack}
-              className="ri-arrow-left-line  lg:hidden flex text-2xl font-semibold"
-            ></Link>
-          ) : (
-            <h1 className="font-[pacifico] text-2xl text-white lg:flex">
-              Instagram
-            </h1>
-          )}
-        </div>
-        <div className="flex items-center px-3 gap-3">
-          <div className="flex items-center gap-2">
-            <Link to={`/notification`}>
-              <i class="ri-notification-fill text-2xl font-semibold"></i>
-            </Link>
+      {location.pathname !== "/users/signup" && location.pathname !== "/users/login"? (
+        <div className="sticky top-0 lg:hidden z-50 bg-black text-white border-b border-gray-600 w-full flex justify-between p-1">
+          <div className="px-2 py-2">
+            {location.pathname !== `/` ? (
+              <Link
+                onClick={navigateBack}
+                className="ri-arrow-left-line  lg:hidden flex text-2xl font-semibold"
+              ></Link>
+            ) : (
+              <h1 className="font-[pacifico] text-2xl text-white lg:flex">
+                Instagram
+              </h1>
+            )}
           </div>
+          <div className="flex items-center px-3 gap-3">
+            <div className="flex items-center gap-2">
+              <Link to={`/notification`}>
+                <i class="ri-notification-fill text-2xl font-semibold"></i>
+              </Link>
+            </div>
 
-          <div className="flex items-center gap-2">
-            <Link to={`/message`}>
-              <i class="ri-messenger-line text-2xl font-semibold"></i>
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to={`/message`}>
+                <i class="ri-messenger-line text-2xl font-semibold"></i>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      ):""}
       {logged?.user?.isProfileComplete ? (
         <div className=" flex flex-col w-full">
           <div className="w-full flex ">
@@ -187,22 +188,25 @@ const App = () => {
                     </p>
                   )}
                 </div>
-                <div ref={divRefLarge}  className="absolute flex left-0 bottom-10">
-                {toggleMenu && (
-                  <div  className=" w-[230px] bg-white text-black p-4 shadow-xl rounded z-50 border border-black">
-                    <p className="font-semibold mb-2">Settings</p>
+                <div
+                  ref={divRefLarge}
+                  className="absolute flex left-0 bottom-10"
+                >
+                  {toggleMenu && (
+                    <div className=" w-[230px] bg-white text-black p-4 shadow-xl rounded z-50 border border-black">
+                      <p className="font-semibold mb-2">Settings</p>
 
-                    <div
-                      onClick={changeColor}
-                      className="w-[60px] md:w-[70px] h-[34px] md:h-[38px] bg-white border border-black p-1 flex items-center justify-start rounded-3xl cursor-pointer relative"
-                    >
                       <div
-                        ref={moveLarge}
-                        className="w-5 h-5 md:w-8 md:h-8 bg-black rounded-full absolute transition-all duration-300"
-                      ></div>
+                        onClick={changeColor}
+                        className="w-[60px] md:w-[70px] h-[34px] md:h-[38px] bg-white border border-black p-1 flex items-center justify-start rounded-3xl cursor-pointer relative"
+                      >
+                        <div
+                          ref={moveLarge}
+                          className="w-5 h-5 md:w-8 md:h-8 bg-black rounded-full absolute transition-all duration-300"
+                        ></div>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
                 </div>
               </div>
             </div>
@@ -258,92 +262,95 @@ const App = () => {
               ))}
             </div>
           </div>
-          {location.pathname ==="/" &&
-
+          {location.pathname === "/" && (
             <div className="lg:hidden flex items-center justify-center fixed bottom-0 z-50">
-            <div className="w-screen">
-              {profile?.user.isProfileComplete ? (
-                <div className="flex gap-4 p-3 bg-black">
-                  <div className="flex items-center gap-2">
-                    <Link to={`/`}>
-                      <i class="ri-home-5-line text-3xl font-semibold text-white"></i>
-                    </Link>
-                  </div>
+              <div className="w-screen">
+                {profile?.user.isProfileComplete ? (
+                  <div className="flex gap-4 p-3 bg-black">
+                    <div className="flex items-center gap-2">
+                      <Link to={`/`}>
+                        <i class="ri-home-5-line text-3xl font-semibold text-white"></i>
+                      </Link>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <Link to={`/search`}>
-                      <i class="ri-search-line text-3xl font-semibold text-white"></i>
-                    </Link>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <Link to={`/search`}>
+                        <i class="ri-search-line text-3xl font-semibold text-white"></i>
+                      </Link>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <Link to={`/create`}>
-                      <i class="ri-add-box-line text-3xl font-semibold text-white"></i>
-                    </Link>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <Link to={`/create`}>
+                        <i class="ri-add-box-line text-3xl font-semibold text-white"></i>
+                      </Link>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <Link onClick={logout}>
-                      <i class="ri-logout-box-line text-3xl text-gray-500 font-semibold"></i>
-                    </Link>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <Link onClick={logout}>
+                        <i class="ri-logout-box-line text-3xl text-gray-500 font-semibold"></i>
+                      </Link>
+                    </div>
 
-                  <div className="flex items-center gap-2">
-                    <Link to={`/user/profile`}>
-                      <img
-                        className="w-[32px] h-[32px] rounded-full border outline object-cover font-semibold"
-                        src={profile?.user.profile.avatar}
-                        alt=""
-                      />
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <div>{/* <Link to={`/users/signup`}>Signup</Link> */}</div>
-              )}
-            </div>
-            <div ref={iconRef} className="fixed bottom-2 right-2">
-              <div onClick={showSettings}>
-                {toggleMenu ? (
-                  <p className="flex items-center gap-3 hover:cursor-pointer text-white">
-                    {" "}
-                    <i className="ri-close-line text-3xl "></i>
-                  </p>
-                ) : (
-                  <p className="flex items-center gap-3 hover:cursor-pointer text-white">
-                    {" "}
-                    <i className="ri-menu-line text-3xl"></i>
-                  </p>
-                )}
-              </div>
-              <div className={`absolute flex right-2 bottom-16 `} ref={divRef}>
-                {toggleMenu && (
-                  <div className=" w-[230px] border border-gray-700 flex flex-col items-center p-4 shadow-xl rounded z-50">
-                    <p className="font-semibold mb-2 text-black">{toggle?"Black Theme":"White Theme"}</p>
-
-                    <div
-                      onClick={changeColor}
-                      className="w-[60px] md:w-[70px] h-[34px] md:h-[38px] border border-black p-1 flex items-center justify-start rounded-3xl cursor-pointer relative"
-                    >
-                      <div
-                        ref={move}
-                        className="w-5 h-5 md:w-8 md:h-8 bg-black rounded-full absolute transition-all duration-300"
-                      ></div>
+                    <div className="flex items-center gap-2">
+                      <Link to={`/user/profile`}>
+                        <img
+                          className="w-[32px] h-[32px] rounded-full border outline object-cover font-semibold"
+                          src={profile?.user.profile.avatar}
+                          alt=""
+                        />
+                      </Link>
                     </div>
                   </div>
+                ) : (
+                  <div>{/* <Link to={`/users/signup`}>Signup</Link> */}</div>
                 )}
               </div>
+              <div ref={iconRef} className="fixed bottom-2 right-2">
+                <div onClick={showSettings}>
+                  {toggleMenu ? (
+                    <p className="flex items-center gap-3 hover:cursor-pointer text-white">
+                      {" "}
+                      <i className="ri-close-line text-3xl "></i>
+                    </p>
+                  ) : (
+                    <p className="flex items-center gap-3 hover:cursor-pointer text-white">
+                      {" "}
+                      <i className="ri-menu-line text-3xl"></i>
+                    </p>
+                  )}
+                </div>
+                <div
+                  className={`absolute flex right-2 bottom-16 `}
+                  ref={divRef}
+                >
+                  {toggleMenu && (
+                    <div className=" w-[230px] border border-gray-700 flex flex-col items-center p-4 shadow-xl rounded z-50">
+                      <p className="font-semibold mb-2 text-black">
+                        {toggle ? "Black Theme" : "White Theme"}
+                      </p>
+
+                      <div
+                        onClick={changeColor}
+                        className="w-[60px] md:w-[70px] h-[34px] md:h-[38px] border border-black p-1 flex items-center justify-start rounded-3xl cursor-pointer relative"
+                      >
+                        <div
+                          ref={move}
+                          className="w-5 h-5 md:w-8 md:h-8 bg-black rounded-full absolute transition-all duration-300"
+                        ></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-          
-          }
-          
+          )}
         </div>
       ) : (
         <div className="">
           <MainRouter />
         </div>
       )}
+      <ToastContainer autoClose={1500} theme="dark" position="top-center" />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import axios from '../api/ApiConfig'
 import { usercontext } from '../context/Maincontext'
+import { toast } from 'react-toastify'
 
 
 const EditProfile = () => {
@@ -23,6 +24,7 @@ const EditProfile = () => {
         const {data}= await axios.patch(`/users/profile/data-update/${id}`,profileDetails, {withCredentials:true})
         setsingleUser(data); 
         getLoggedUser()
+        toast.success("Profle Updated Successfully")
         navigate("/user/profile")
         } catch (error) {
             console.log(error);

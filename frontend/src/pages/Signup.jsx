@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 import axios from '../api/ApiConfig'
 import { usercontext } from '../context/Maincontext'
+import { toast } from 'react-toastify'
 
 const Signup = () => {
     const {setusers,fetchAllUsers}= useContext(usercontext)
@@ -16,6 +17,7 @@ const Signup = () => {
             // setusers(data)
             fetchAllUsers()
             reset()
+            toast.success("Sigup successfull")
             navigate("/users/login")
         } catch (error) {
             console.log("Signup failed", error);  
