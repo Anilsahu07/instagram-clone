@@ -12,7 +12,7 @@ const messageRouter= require("./routes/messageRoute")
 
 const io= new Server(server, {
     cors:{
-        origin: "https://elaborate-kitten-e209e4.netlify.app",
+        origin: "https://leafy-panda-2f2125.netlify.app",
         methods:["GET", "POST"],
         credentials:true
     }
@@ -21,7 +21,7 @@ const io= new Server(server, {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:"https://elaborate-kitten-e209e4.netlify.app",
+    origin:"https://leafy-panda-2f2125.netlify.app",
     credentials:true
 }))
 
