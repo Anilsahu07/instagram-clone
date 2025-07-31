@@ -6,7 +6,6 @@ const Search = () => {
   const [search, setsearch] = useState(null)
   const [images, setimages] = useState([])
   const [fashion, setfashion] = useState([])
-  const [sports, setsports] = useState([])
   const {users,singleUser}=useContext(usercontext)
   const navigate=useNavigate()
 
@@ -45,21 +44,15 @@ const fetchFaishonImages= async()=>{
   const data= await res.json()
   setfashion(data.results)
 }
-const fetchSportsImages= async()=>{
-  const {data}= await fetch("https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard")
-  setsports(data)
-}
-console.log(sports);
 
 
 useEffect(() => {
   fetchImages()
   fetchFaishonImages()
-  fetchSportsImages()
 }, [])
 
 
-if (images.length===0) {
+if (images?.length===0) {
     return <div className="flex justify-center h-screen items-center mt-4">
               <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
         </div>
@@ -78,13 +71,13 @@ if (images.length===0) {
       </div>
       {search ? (
   <div className="flex flex-col justify-center gap-3 w-full">
-    {showUsers.length > 0 ? (
-      showUsers.map((u) => (
+    {showUsers?.length > 0 ? (
+      showUsers?.map((u) => (
         <div key={u._id} className="flex justify-center gap-2 p-2 border-b">
           <img className="w-12 h-12 rounded-full" src={u?.profile?.avatar} alt="" />
           <div className="flex flex-col">
             <p className="font-semibold text-lg cursor-pointer" onClick={() => navigateTo(u._id)}>
-              {u.username}
+              {u?.username}
             </p>
             <p className="text-sm">{u?.profile?.fullName}</p>
           </div>
@@ -96,7 +89,7 @@ if (images.length===0) {
   </div>
 ) : (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2">
-    {images.map((img) => (
+    {images?.map((img) => (
       <img
         key={img.id}
         src={img.urls.small}
@@ -105,7 +98,7 @@ if (images.length===0) {
       />
     ))}
     {
-      fashion.map((img)=>(
+      fashion?.map((img)=>(
          <img
         key={img.id}
         src={img.urls.small}
