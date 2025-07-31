@@ -20,7 +20,7 @@ const io= new Server(server, {
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://gentle-macaron-91ff7e.netlify.app",
     credentials:true
 }))
 
